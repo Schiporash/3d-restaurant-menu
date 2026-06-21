@@ -55,10 +55,41 @@ animations and lazy 3D previews on dish cards. **Implemented — 31 tests pass, 
 _Note: framer-motion v12 needed cubic-bezier easing typed as a tuple; test files that render
 dish cards stub `IntersectionObserver` (absent in jsdom)._
 
-## 🚧 Next up — ideas (not started)
-Cart/ordering flow is the natural next plan. See "Out of scope" below.
+## 🚧 What's left to do (roadmap)
 
-### Target look
+Nothing is in progress right now. Suggested order, highest value first. Each item should get its
+own brainstorm → spec → plan cycle before coding.
+
+### 1. Merge this branch
+- [ ] Open a PR (or merge) `3d-menu-browsing` → `main`. Everything above lives only on the feature
+  branch so far.
+
+### 2. Use the `table` query param (small, high value for the QR story)
+- [ ] `/` already redirects to `/menu?table=N`, but the table number is never shown or used. Display
+  it (e.g. "Table 5") in the header/menu and carry it through to a future order.
+
+### 3. Cart & Ordering flow (the big next feature — was explicitly out of scope for v1)
+- [ ] `OrderContext` (add/remove items, quantities, running total)
+- [ ] `CustomizerPanel` — toggle removable ingredients per dish before adding
+- [ ] `OrderDrawer` — slide-out cart summary
+- [ ] `/order` review page and `/confirmation` page
+- [ ] Persist cart (localStorage) so a refresh doesn't lose it
+
+### 4. Real 3D models
+- [ ] Replace the placeholder procedural shapes with real `.glb` dish models loaded via
+  `useGLTF` (drei). Add a `modelUrl` field to `Dish` and a loading fallback.
+
+### 5. Backend / persistence (turns the demo into a real product)
+- [ ] Menu from an API/DB instead of `mockMenu.ts`
+- [ ] Submit orders to a backend; basic admin/kitchen view
+
+### 6. Polish & nice-to-haves
+- [ ] AR "view in your space" on the dish page (WebXR / model-viewer)
+- [ ] Loading skeletons for the menu grid
+- [ ] Light theme toggle, i18n (RO/EN)
+- [ ] Accessibility pass (focus states, screen-reader labels on the 3D viewer)
+
+### Redesign target look (reference)
 Espresso background (`#1c1512`) + warm gold accent (`#e0a458`) + sage green (`#7d8b6a`) +
 cream text (`#f0e9df`), soft radial "lamp glow" background, Playfair Display headings + Inter body.
 
@@ -69,14 +100,10 @@ cream text (`#f0e9df`), soft radial "lamp glow" background, Playfair Display hea
 ```bash
 cd .worktrees/3d-menu-browsing   # or wherever the 3d-menu-browsing branch is checked out
 npm install --legacy-peer-deps
-npm test            # baseline: 27 passing
-npm run dev         # http://localhost:3000
+npm test            # baseline: 31 passing
+npm run build       # must pass
+npm run dev         # http://localhost:3000 (or next free port)
 ```
 
-Then execute the redesign plan task-by-task (TDD, commit per task) following
-`docs/superpowers/plans/2026-06-21-warm-elegant-redesign.md`. Keep the existing 27 tests green.
-
----
-
-## Out of scope (future plans)
-Cart/ordering flow, real `.glb` models, AR, backend/API, light theme, i18n.
+Then pick the next item from "What's left to do" above and run it through
+brainstorm → spec → plan → implement, keeping all tests green.
