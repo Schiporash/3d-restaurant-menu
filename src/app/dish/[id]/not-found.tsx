@@ -2,9 +2,14 @@ import Link from "next/link";
 
 export default function DishNotFound() {
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-sm text-white/70">We couldn&apos;t find that dish.</p>
-      <Link href="/menu" className="text-sm text-[var(--color-accent)]">
+    <div className="mx-auto flex max-w-lg flex-col gap-3 py-12 text-center">
+      <p className="font-serif text-lg text-[var(--color-text)]">
+        We couldn&apos;t find that dish.
+      </p>
+      <Link
+        href="/menu"
+        className="text-sm text-[var(--color-accent)] transition-opacity hover:opacity-80"
+      >
         ← Back to menu
       </Link>
     </div>
