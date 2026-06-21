@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 const ALL_CATEGORIES = "All";
 
 interface CategoryFilterProps {
@@ -12,7 +14,11 @@ export default function CategoryFilter({ categories, active, onChange }: Categor
   const options = [ALL_CATEGORIES, ...categories];
 
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Filter dishes by category">
+    <div
+      className="flex gap-2 overflow-x-auto pb-2"
+      role="tablist"
+      aria-label="Filter dishes by category"
+    >
       {options.map((category) => {
         const isActive = category === active;
         return (
@@ -22,13 +28,20 @@ export default function CategoryFilter({ categories, active, onChange }: Categor
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(category)}
-            className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+            className={`relative whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               isActive
-                ? "bg-[var(--color-accent)] text-slate-900"
-                : "bg-white/5 text-[var(--color-text)] hover:bg-white/10"
+                ? "text-[var(--color-accent)]"
+                : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
             }`}
           >
-            {category}
+            {isActive && (
+              <motion.span
+                layoutId="category-pill"
+                className="absolute inset-0 rounded-full bg-[var(--color-accent)]/12 ring-1 ring-[var(--color-accent)]/40"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">{category}</span>
           </button>
         );
       })}
