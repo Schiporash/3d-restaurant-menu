@@ -29,28 +29,34 @@ Design: `docs/superpowers/specs/2026-06-09-3d-restaurant-menu-design.md`
 
 ---
 
-## 🚧 Next up — Warm & Elegant Redesign (NOT started)
+## ✅ Done — Warm & Elegant Redesign
 
 A full visual + motion redesign: warm/cozy + fine-dining aesthetic with smooth Framer Motion
-animations and lazy 3D previews on dish cards. **Design and plan are written; no code yet.**
+animations and lazy 3D previews on dish cards. **Implemented — 31 tests pass, build passes.**
 
 - **Spec:** `docs/superpowers/specs/2026-06-21-warm-elegant-redesign-design.md`
 - **Plan (12 bite-sized, TDD tasks):** `docs/superpowers/plans/2026-06-21-warm-elegant-redesign.md`
 
-### Task checklist (see the plan for full code per task)
+### Task checklist (all complete)
 
-- [ ] **T1** — Install `framer-motion`
-- [ ] **T2** — Warm design tokens + background glow + serif/sans fonts (`globals.css`, `layout.tsx`)
-- [ ] **T3** — Extract shared `three/DishMesh.tsx`; warm `Viewer3D` lighting + auto-rotate
-- [ ] **T4** — Motion primitives: `FadeIn`, `StaggerGrid` (with `prefers-reduced-motion`)
-- [ ] **T5** — `lib/orbGradient.ts` helper (TDD)
-- [ ] **T6** — `DishCardPreview` (gradient orb + lazy 3D via IntersectionObserver/hover)
-- [ ] **T7** — `CategoryFilter` warm pills + animated sliding underline (`layoutId`)
-- [ ] **T8** — Warm-toned `AllergenBadge` colors
-- [ ] **T9** — `DishCard` warm styling + preview + hover lift
-- [ ] **T10** — Menu page stagger grid + warm search input
-- [ ] **T11** — Dish detail page + not-found warm polish
-- [ ] **T12** — Full verification (tests + build + manual smoke)
+- [x] **T1** — Install `framer-motion`
+- [x] **T2** — Warm design tokens + background glow + serif/sans fonts (`globals.css`, `layout.tsx`)
+- [x] **T3** — Extract shared `three/DishMesh.tsx`; warm `Viewer3D` lighting + auto-rotate
+- [x] **T4** — Motion primitives: `FadeIn`, `StaggerGrid` (with `prefers-reduced-motion`)
+- [x] **T5** — `lib/orbGradient.ts` helper (TDD)
+- [x] **T6** — `DishCardPreview` (gradient orb + lazy 3D via IntersectionObserver/hover)
+- [x] **T7** — `CategoryFilter` warm pills + animated sliding underline (`layoutId`)
+- [x] **T8** — Warm-toned `AllergenBadge` colors
+- [x] **T9** — `DishCard` warm styling + preview + hover lift
+- [x] **T10** — Menu page stagger grid + warm search input
+- [x] **T11** — Dish detail page + not-found warm polish
+- [x] **T12** — Full verification (31 tests + build pass)
+
+_Note: framer-motion v12 needed cubic-bezier easing typed as a tuple; test files that render
+dish cards stub `IntersectionObserver` (absent in jsdom)._
+
+## 🚧 Next up — ideas (not started)
+Cart/ordering flow is the natural next plan. See "Out of scope" below.
 
 ### Target look
 Espresso background (`#1c1512`) + warm gold accent (`#e0a458`) + sage green (`#7d8b6a`) +
