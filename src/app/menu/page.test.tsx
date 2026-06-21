@@ -1,7 +1,18 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import MenuPage from "./page";
+
+// Dish cards render DishCardPreview, which uses IntersectionObserver (absent in jsdom).
+// Stub one that never fires so previews stay static orbs during the test.
+beforeEach(() => {
+  class IO {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  vi.stubGlobal("IntersectionObserver", IO);
+});
 
 describe("MenuPage", () => {
   it("renders all mock dishes by default", () => {
