@@ -25,3 +25,30 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
+
+@keyframes ember-drift {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--ember-opacity, 0.5);
+  }
+  90% {
+    opacity: var(--ember-opacity, 0.5);
+  }
+  100% {
+    transform: translateY(-60svh) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}

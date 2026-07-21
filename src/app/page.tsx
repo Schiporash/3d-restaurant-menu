@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
-import { buildMenuUrl } from "@/lib/menuUrl";
+import Landing from "@/components/landing/Landing";
+import { buildMenuUrl, resolveTableId } from "@/lib/menuUrl";
 
 export default async function HomePage({
   searchParams,
@@ -7,5 +7,7 @@ export default async function HomePage({
   searchParams: Promise<{ table?: string | string[] }>;
 }) {
   const params = await searchParams;
-  redirect(buildMenuUrl(params.table));
+  return (
+    <Landing menuHref={buildMenuUrl(params.table)} tableId={resolveTableId(params.table)} />
+  );
 }

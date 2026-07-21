@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import SiteChrome from "@/components/layout/SiteChrome";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -23,12 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
-        <header className="border-b border-[var(--color-accent)]/15 px-4 py-4">
-          <span className="font-serif text-2xl font-semibold tracking-wide text-[var(--color-accent)]">
-            3D Restaurant Menu
-          </span>
-        </header>
-        <main className="px-4 py-5">{children}</main>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

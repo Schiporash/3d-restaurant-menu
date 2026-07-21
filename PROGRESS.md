@@ -1,6 +1,6 @@
 # Progress & Handoff — 3D Restaurant Menu
 
-_Last updated: 2026-06-21. Branch: `3d-menu-browsing`._
+_Last updated: 2026-07-21. Branch: `3d-menu-browsing`._
 
 This file tracks what is **done** and what is **left to do**, so anyone (or a fresh AI session)
 can pick the work up without re-deriving context.
@@ -55,39 +55,48 @@ animations and lazy 3D previews on dish cards. **Implemented — 31 tests pass, 
 _Note: framer-motion v12 needed cubic-bezier easing typed as a tuple; test files that render
 dish cards stub `IntersectionObserver` (absent in jsdom)._
 
+## ✅ Done — Ambient Landing Page
+
+A scroll-snap "showroom" landing at `/` (hero + experience + CTA), ambient CSS glow and
+embers, a lazy-loaded 3D centrepiece, and SVG line art that draws on scroll. `/` no longer
+auto-redirects to the menu. **38 tests pass, build passes.**
+
+Details, decisions and follow-ups: `docs/LANDING.md`
+
 ## 🚧 What's left to do (roadmap)
 
-Nothing is in progress right now. Suggested order, highest value first. Each item should get its
-own brainstorm → spec → plan cycle before coding.
+Suggested order, highest value first. Each item should get its own brainstorm → spec → plan
+cycle before coding.
 
-### 1. Merge this branch
-- [ ] Open a PR (or merge) `3d-menu-browsing` → `main`. Everything above lives only on the feature
-  branch so far.
+### 1. Dish-level polish (direct follow-on from the landing work)
+- [ ] Mouse-parallax tilt on `DishCard` — the one technique from the reference site not yet
+  applied.
+- [ ] Loading skeletons for the menu grid.
 
-### 2. Use the `table` query param (small, high value for the QR story)
-- [ ] `/` already redirects to `/menu?table=N`, but the table number is never shown or used. Display
-  it (e.g. "Table 5") in the header/menu and carry it through to a future order.
+### 2. Real 3D models — the big visual unlock
+Every 3D object in the app (dish previews, dish viewer, hero centrepiece) is still
+placeholder procedural geometry from `three/DishMesh.tsx` — elegant, but it doesn't
+look like food. See `docs/LANDING.md` for the capture-vs-generate trade-off.
+- [ ] Add a `modelUrl` field to `Dish` and a loading fallback
+- [ ] Load real `.glb` models via `useGLTF` (drei), or a splat renderer if using scans
 
-### 3. Cart & Ordering flow (the big next feature — was explicitly out of scope for v1)
+### 3. Cart & Ordering flow (was explicitly out of scope for v1)
 - [ ] `OrderContext` (add/remove items, quantities, running total)
 - [ ] `CustomizerPanel` — toggle removable ingredients per dish before adding
 - [ ] `OrderDrawer` — slide-out cart summary
 - [ ] `/order` review page and `/confirmation` page
 - [ ] Persist cart (localStorage) so a refresh doesn't lose it
+- [ ] Carry the `table` id (already parsed by `resolveTableId`) through to the order
 
-### 4. Real 3D models
-- [ ] Replace the placeholder procedural shapes with real `.glb` dish models loaded via
-  `useGLTF` (drei). Add a `modelUrl` field to `Dish` and a loading fallback.
-
-### 5. Backend / persistence (turns the demo into a real product)
+### 4. Backend / persistence (turns the demo into a real product)
 - [ ] Menu from an API/DB instead of `mockMenu.ts`
 - [ ] Submit orders to a backend; basic admin/kitchen view
 
-### 6. Polish & nice-to-haves
+### 5. Polish & nice-to-haves
 - [ ] AR "view in your space" on the dish page (WebXR / model-viewer)
-- [ ] Loading skeletons for the menu grid
 - [ ] Light theme toggle, i18n (RO/EN)
 - [ ] Accessibility pass (focus states, screen-reader labels on the 3D viewer)
+- [ ] Fix `npm run lint` failing on the generated `next-env.d.ts` (see `docs/LANDING.md`)
 
 ### Redesign target look (reference)
 Espresso background (`#1c1512`) + warm gold accent (`#e0a458`) + sage green (`#7d8b6a`) +
