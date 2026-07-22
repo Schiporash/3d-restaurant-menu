@@ -15,8 +15,10 @@ function SlowSpin({ spin }: { spin: boolean }) {
     }
   });
 
+  // Offset below the title — centred, the torus sat directly behind the
+  // wordmark and swallowed it, worst of all at mobile widths.
   return (
-    <group ref={ref} rotation={[0.5, 0, 0]}>
+    <group ref={ref} position={[0, -1.5, 0]} rotation={[0.5, 0, 0]}>
       <DishMesh shape="torus" color="#e0a458" />
     </group>
   );
