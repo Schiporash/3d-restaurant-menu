@@ -60,19 +60,20 @@ function Layer({
   opacityStops,
   className,
   indices,
-  endOpacity,
 }: {
   progress: MotionValue<number>;
   scaleRange: [number, number];
   opacityStops: [number, number, number, number];
   className: string;
   indices: number[];
-  /** Opacity once the approach has finished — 0 sweeps past, >0 settles. */
-  endOpacity: number;
 }) {
-  const scale = useTransform(progress, [0, 1], scaleRange);
-  const opacity = useTransform(progress, opacityStops, [0.18, 1, 1, endOpacity]);
-  const blur = useTransform(progress, [0, 0.35], [10, 0]);
+  // Scale runs across the same window the layer is visible in, so the rush is a
+  // single sweep: faint-and-far at the first stop, swelling off-screen by the
+  // last. Opacity always ends at 0 — the approach is a hero flourish that clears
+  // completely before the text sections rather than settling behind them.
+  const scale = useTransform(progress, [opacityStops[0], opacityStops[3]], scaleRange);
+  const opacity = useTransform(progress, opacityStops, [0.12, 1, 1, 0]);
+  const blur = useTransform(progress, [opacityStops[0], opacityStops[1]], [12, 0]);
   const filter = useTransform(blur, (b) => `blur(${b.toFixed(2)}px)`);
 
   return (
@@ -113,19 +114,11 @@ export default function ApproachingMenu({
     restDelta: 0.001,
   });
 
+  // The approach is decorative motion. For reduced-motion diners there is
+  // nothing to settle into, so we skip it entirely and leave the text sections
+  // clean rather than parking a static ghost grid behind the copy.
   if (reduce) {
-    return (
-      <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-20"
-        aria-hidden="true"
-      >
-        <div className="grid w-[min(760px,88vw)] grid-cols-2 gap-3 sm:grid-cols-3">
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <PlateCard key={i} index={i} />
-          ))}
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -134,26 +127,25 @@ export default function ApproachingMenu({
       data-testid="approaching-menu"
       aria-hidden="true"
     >
-      {/* Back layer travels furthest and sweeps past the viewer, which is what
-          sells the depth; it is gone by the CTA so it cannot crowd it. */}
+      {/* Back layer travels furthest and swells largest, so it reads as the
+          deepest plane rushing past. It clears first, opening space for the
+          front layer's final sweep. */}
       <Layer
         progress={progress}
-        scaleRange={[0.14, 3.4]}
-        opacityStops={[0, 0.12, 0.55, 0.82]}
+        scaleRange={[0.5, 5.5]}
+        opacityStops={[0, 0.08, 0.3, 0.44]}
         className="opacity-60"
         indices={[3, 4, 5]}
-        endOpacity={0}
       />
-      {/* Front layer settles at a readable size and stays, so the diner lands
-          on the CTA with the menu already in front of them rather than a
-          blank screen. */}
+      {/* Front layer sweeps a touch later and is fully gone by ~46% progress —
+          just as "Set at your table" snaps in — so the text sections land on a
+          clean stage rather than a screen of parked cards. */}
       <Layer
         progress={progress}
-        scaleRange={[0.24, 1.75]}
-        opacityStops={[0, 0.16, 0.7, 1]}
+        scaleRange={[0.4, 3.4]}
+        opacityStops={[0, 0.1, 0.34, 0.46]}
         className=""
         indices={[0, 1, 2]}
-        endOpacity={0.5}
       />
     </div>
   );
